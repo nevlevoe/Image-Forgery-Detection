@@ -1,0 +1,58 @@
+replace 
+ if label == "Forged":
+        st.success("Showing results using both models: CASIA and DEFACTO")
+    
+        # Load both models
+        mvss_model_casia = load_mvssnet(MVSSNET_PATH_LOW)
+        mvss_model_defacto = load_mvssnet(MVSSNET_PATH_HIGH)
+    
+        # Run segmentation with both
+        mask_casia, binary_mask_casia = segment_with_mvssnet(image, mvss_model_casia)
+        mask_defacto, binary_mask_defacto = segment_with_mvssnet(image, mvss_model_defacto)
+    
+        st.markdown("### 🔍 Forgery Segmentation Results (CASIA vs DEFACTO)")
+    
+        # Display side-by-side
+        fig, axs = plt.subplots(2, 2, figsize=(12, 10))
+    
+        # CASIA model results
+        axs[0][0].imshow(mask_casia, cmap='gray', vmin=0, vmax=1)
+        axs[0][0].set_title("CASIA trained model Predicted Mask")
+        axs[0][0].axis('off')
+    
+        axs[0][1].imshow(binary_mask_casia * 255, cmap='gray', vmin=0, vmax=255)
+        axs[0][1].set_title("CASIA trained Binarized Mask")
+        axs[0][1].axis('off')
+    
+        # DEFACTO model results
+        axs[1][0].imshow(mask_defacto, cmap='gray', vmin=0, vmax=1)
+        axs[1][0].set_title("DEFACTO trained model Predicted Mask")
+        axs[1][0].axis('off')
+    
+        axs[1][1].imshow(binary_mask_defacto * 255, cmap='gray', vmin=0, vmax=255)
+        axs[1][1].set_title("DEFACTO trained model Binarized Mask")
+        axs[1][1].axis('off')
+    
+        st.pyplot(fig)
+		
+with 
+	if label == "Forged":
+        if confidence >= 0.85:
+            st.success(" Using CASIA-tuned MVSS-Net model")
+            mvss_model = load_mvssnet(MVSSNET_PATH_LOW)
+            
+        else:
+            st.success("Using DEFACTO-tuned MVSS-Net model")
+            mvss_model = load_mvssnet(MVSSNET_PATH_HIGH)
+
+        mask, binary_mask = segment_with_mvssnet(image, mvss_model)
+
+        st.markdown("### 🔍 Forgery Segmentation Results")
+        fig, axs = plt.subplots(1, 2, figsize=(12, 5))
+        axs[0].imshow(mask, cmap='gray', vmin=0, vmax=1)
+        axs[0].set_title("Predicted Mask")
+        axs[0].axis('off')
+        axs[1].imshow(binary_mask * 255, cmap='gray', vmin=0, vmax=255)
+        axs[1].set_title("Binarized Mask")
+        axs[1].axis('off')
+        st.pyplot(fig)

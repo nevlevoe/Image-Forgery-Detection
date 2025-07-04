@@ -1,7 +1,7 @@
 # HPE CPP project by Aneesh K P , Gargi Bharadwaj , Mukund Raghavan Sadavarthi , Preethi Narashimhan , Rishab Kumar
-# 🕵️ Image Forgery Detection (Traditional Methods)
+# 🕵️ Image Forgery Detection
 
-A lightweight and effective image forgery detection tool using traditional and deep learning methods. Includes pretrained models and a Streamlit-based interactive interface.
+A lightweight and effective image forgery detection tool using multiple forgery methods. Includes pretrained models and a Streamlit-based interactive interface.
 
 ---
 
